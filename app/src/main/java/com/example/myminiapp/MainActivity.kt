@@ -14,7 +14,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import coil3.compose.AsyncImage
+import com.example.myminiapp.data.MealRepository
 import com.example.myminiapp.ui.state.MealCategoryState
 import com.example.myminiapp.ui.state.MealState
 import com.example.myminiapp.ui.theme.MyMiniAppTheme
@@ -24,19 +30,44 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val mealRepository = (application as MyApp).mealRepository
         setContent {
-            val mealState = MealState(mealRepository)
-            val mealCategoryState = MealCategoryState(mealRepository)
+            MainContent(mealRepository)
+        }
+    }
 
-            LaunchedEffect(mealCategoryState) {
-                mealCategoryState.getCategories()
+
+    @Composable
+    fun MainContent(mealRepository: MealRepository) {
+        val navController = rememberNavController()
+
+        Scaffold(
+            bottomBar = {
+                MyBottomNav(navController)
+            },
+            topBar = {
+                MyTopNav(navController)
             }
+        ) { padding ->
+            NavHost(
+                navController, Screen.HOME.route,
+                modifier = Modifier.padding(padding)
+            ) {
+                composable(Screen.HOME.route) {
+                    Home(navController, mealRepository)
+                }
 
-            LazyColumn {
-                items(mealCategoryState.mealCategories.size) {
-                    Text(mealCategoryState.mealCategories[it].name, fontSize = 30.sp)
-                    AsyncImage (
-                        model = mealCategoryState.mealCategories[it].image, contentDescription = null
-                    )
+                composable(Screen.RANDOM.route) {
+
+                }
+
+                composable(
+                    "mealList/{categoryName}",
+                    arguments = listOf(navArgument("categoryName")
+                    {
+                        type = NavType.StringType
+                    })
+                ) {
+                    val categoryName = it.arguments?.getString("categoryName")
+                    MealList(mealRepository = mealRepository, category = categoryName)
                 }
             }
         }
