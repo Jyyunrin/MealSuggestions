@@ -43,13 +43,13 @@ fun Home(navController: NavController, mealRepository: MealRepository) {
 
     LazyColumn {
         items(mealCategoryState.mealCategories.size) {
-            CategoryCard(navController, mealCategoryState.mealCategories[it], mealRepository)
+            CategoryCard(navController, mealCategoryState.mealCategories[it])
         }
     }
 }
 
 @Composable
-fun CategoryCard(navController: NavController, category: Category, mealRepository: MealRepository) {
+fun CategoryCard(navController: NavController, category: Category) {
 
     var isExpanded by remember {
         mutableStateOf(false)

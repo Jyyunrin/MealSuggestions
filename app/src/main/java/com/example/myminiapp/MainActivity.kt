@@ -1,6 +1,7 @@
 package com.example.myminiapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 composable(Screen.RANDOM.route) {
-
+                    Dish(mealRepository = mealRepository, id = null)
                 }
 
                 composable(
@@ -67,7 +68,19 @@ class MainActivity : ComponentActivity() {
                     })
                 ) {
                     val categoryName = it.arguments?.getString("categoryName")
-                    MealList(mealRepository = mealRepository, category = categoryName)
+                    MealList(navController = navController, mealRepository = mealRepository,
+                        category = categoryName)
+                }
+
+                composable(
+                    "dish/{id}",
+                    arguments = listOf(navArgument("id")
+                    {
+                        type = NavType.StringType
+                    })
+                ) {
+                    val id = it.arguments?.getString("id")
+                    Dish(mealRepository = mealRepository, id = id)
                 }
             }
         }
