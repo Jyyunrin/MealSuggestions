@@ -1,6 +1,5 @@
 package com.example.myminiapp.ui.state
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import com.example.myminiapp.data.Dish
 import com.example.myminiapp.data.MealRepository

@@ -75,7 +75,8 @@ fun CategoryCard(navController: NavController, category: Category) {
                 , modifier=Modifier.size(250.dp)
             )
             if(isExpanded) {
-                Text(category.description ?: "", fontSize = 20.sp)
+                Text(category.description ?: "", fontSize = 20.sp,
+                    fontWeight= FontWeight.SemiBold)
                 Button(
                     onClick = {navController.navigate("mealList/${category.name}")},
                     modifier=Modifier.padding(top=20.dp)

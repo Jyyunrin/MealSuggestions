@@ -62,15 +62,16 @@ fun DishPage(dish: Dish) {
             contentDescription = null,
             modifier = Modifier.size(250.dp).clip(RoundedCornerShape(20.dp))
         )
-        Text("Origin: ${dish.location}", fontSize = 20.sp)
+        Text("Origin: ${dish.location}", fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
     }
 
     Column(modifier = Modifier.padding(top=20.dp)) {
         Text("Ingredients:", fontSize = 25.sp, fontWeight = FontWeight.Bold)
-        for(ingredient in dish.ingredients) { Text(ingredient, fontSize = 20.sp)
+        for(ingredient in dish.ingredients) { Text(ingredient, fontSize = 20.sp,
+            fontWeight = FontWeight.SemiBold)
             }
         Spacer(modifier=Modifier.padding(top=20.dp))
         Text("Instructions:", fontSize = 25.sp, fontWeight = FontWeight.Bold)
-        Text(dish.instructions, fontSize = 20.sp)
+        Text(dish.instructions, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
     }
 }
