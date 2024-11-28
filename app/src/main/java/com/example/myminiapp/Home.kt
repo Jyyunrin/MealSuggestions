@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,7 +36,7 @@ enum class Screen(val route:String) {
 
 @Composable
 fun Home(navController: NavController, mealRepository: MealRepository) {
-    val mealCategoryState = MealCategoryState(mealRepository)
+    val mealCategoryState = remember{MealCategoryState(mealRepository)}
 
     LaunchedEffect(mealCategoryState) {
         mealCategoryState.getCategories()
@@ -56,7 +57,7 @@ fun CategoryCard(navController: NavController, category: Category) {
     }
 
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0x7E3CC034)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEB3B)),
         modifier= Modifier.fillMaxWidth()
         .padding(12.dp)
         .clickable{
@@ -68,13 +69,13 @@ fun CategoryCard(navController: NavController, category: Category) {
             modifier=Modifier.fillMaxWidth().padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(category.name, fontSize = 30.sp)
+            Text(category.name, fontSize = 40.sp, fontWeight=FontWeight.ExtraBold)
             AsyncImage (
                 model = category.image, contentDescription = null
                 , modifier=Modifier.size(250.dp)
             )
             if(isExpanded) {
-                Text(category.description ?: "", fontSize = 15.sp)
+                Text(category.description ?: "", fontSize = 20.sp)
                 Button(
                     onClick = {navController.navigate("mealList/${category.name}")},
                     modifier=Modifier.padding(top=20.dp)

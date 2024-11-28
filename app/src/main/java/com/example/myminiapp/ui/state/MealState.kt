@@ -19,19 +19,14 @@ class MealState(private val mealRepository: MealRepository) {
     }
 
     suspend fun getDish(id: String) {
-        Log.i("DEBUGGGGGGGGGSTATE", id)
-        try {
-            mealsIndividual.also {
-                it.clear()
-                it.addAll(mealRepository.getMealById(id).meals)
-            }
-        } catch (e: Exception) {
-            Log.e("DEBUGGGGGGGGGSTATE", "Error fetching meal: ${e.message}", e)
+        mealsIndividual.also {
+            it.clear()
+            it.addAll(mealRepository.getMealById(id).meals)
         }
     }
 
     suspend fun getRandomDish() {
-        meals.also{
+        mealsIndividual.also{
             it.clear()
             it.addAll(mealRepository.getRandomMeal().meals)
         }

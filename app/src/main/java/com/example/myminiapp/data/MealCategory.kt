@@ -6,6 +6,7 @@ data class MealCategory(
     val categories: List<Category>
 )
 
+
 data class Category(
     @SerializedName("idCategory")
     val id: String,
@@ -14,5 +15,12 @@ data class Category(
     @SerializedName("strCategoryThumb")
     val image: String?,
     @SerializedName("strCategoryDescription")
+    val rawDescription: String?) {
+
     val description: String?
-)
+        get() = cleanDescription(rawDescription)
+
+    private fun cleanDescription(description: String?): String? {
+        return description?.replace(Regex("\\[\\d+]"), "")?.trim()
+    }
+}
